@@ -31,13 +31,31 @@ if ($operacao == 'cadastrar') {
               (categoria_produto,nome_produto,preco,descricao,produto_usuario,imagem)
           VALUES
            ('$categoria_produto','$nome_produto','$preco','$descricao','$cod_login','$novo_nome')";
-
-    
     
     $mensagem = "Anúncio adicionado com sucesso!";
 
 } // fim se cadastrar
 
+if ($operacao == 'editar'){ 
+
+    $cod_produto = $_POST['cod_produto'];
+    $nome_imagem = $_POST['nome_imagem'];
+    
+     if (strlen($imagem) > 0 ){
+        copy($imagem_temporaria,"../imagens/$novo_nome");
+        unlink("../imagem/$nome_imagem"); 
+
+        $nome_imagem = $novo_nome;
+  }
+
+    $sql = "UPDATE tbl_produto SET categoria_produto='$categoria_produto',
+                                   nome_produto='$nome_produto',
+                                   preco='$preco',
+                                   descricao='$descricao',
+                                   produto_usuario='$cod_login',
+                                   imagem='$nome_imagem' 
+                                   WHERE cod_produto=$cod_produto";
+    }
 
 // incluir a conexao
 include("../connection/conexao.php");
