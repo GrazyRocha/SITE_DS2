@@ -67,6 +67,9 @@ $_SESSION['nome'] = $dadosUsuario['nome'];
 // email do usuario
 $_SESSION['email'] = $dadosUsuario['email'];
 
+//senha atual do ususario
+$_SESSION['senha'] = $dadosUsuario['senha'];
+
 header("location:admin/index.php");
 
 

@@ -37,9 +37,9 @@ if ( isset($_GET['msg']) ) {
   <tbody>
 
   <?php 
-
   // criar a consulta para exibir as categorias
-  $sql = "SELECT * FROM tbl_categoria";
+  $sql = "SELECT *,IFNULL( (SELECT COUNT(cod_produto) FROM tbl_produto 
+  WHERE categoria_produto=cod_categoria),0 ) AS anuncios FROM tbl_categoria";
 
   // incluir a conexao
   include("../connection/conexao.php");
@@ -72,9 +72,18 @@ if ( isset($_GET['msg']) ) {
 </a>  
       </td>
       <td scope="col">
+
+    <?php 
+      if ($dados['anuncios'] == 0) {  ?>
 <a href="acoes-categoria.php?operacao=excluir&cod_categoria=<?php echo $dados['cod_categoria'];?>"> 
-  <i class="fas fa-trash-alt"></i> Excluir 
+  <i class="fas fa-trash-alt"></i> 
+    Excluir 
 </a> 
+    <?php }else{ ?>    
+        <a href="#" data-toggle="modal" data-target="#modalAlertCategoria"> 
+        <i class="fas fa-trash-alt"></i> Excluir 
+        </a> 
+   <?php  } ?>
       </td>
     </tr>
 
@@ -83,3 +92,29 @@ if ( isset($_GET['msg']) ) {
 
  </tbody>	
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="modalAlertCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Atenção!</p>
+        <p>Essa Categoria já está sendo usada em outro anúncio e não pode ser excluída!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

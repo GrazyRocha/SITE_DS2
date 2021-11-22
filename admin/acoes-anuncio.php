@@ -57,6 +57,14 @@ if ($operacao == 'editar'){
                                    WHERE cod_produto=$cod_produto";
     }
 
+    if ($operacao == 'excluir') {
+        $cod_produto = $_POST['cod_produto'];
+
+        $sql = "DELETE FROM tbl_produto WHERE cod_produto='$cod_produto' ";
+
+        $mensagem = "Anúncio excluido com sucesso.";
+    }
+
 // incluir a conexao
 include("../connection/conexao.php");
 
